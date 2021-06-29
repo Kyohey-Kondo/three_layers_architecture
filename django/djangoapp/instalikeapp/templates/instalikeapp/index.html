@@ -1,0 +1,43 @@
+{% load static %}
+{% if latest_user_list %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'instalikeapp/style.css' %}">
+
+<body>
+    <!-- <header>
+        <h1>
+            <a href="/">RICO NOTES</a>
+        </h1>
+        <nav class="pc-nav">
+            <ul>
+                <li><a href="#">ABOUT</a></li>
+                <li><a href="#">SERVICE</a></li>
+                <li><a href="#">COMPANY</a></li>
+                <li><a href="#">CONTACT</a></li>
+            </ul>
+        </nav>
+    </header> -->
+
+    <div class="login-demo">
+    <h2>ユーザーを選択（ログインのデモ）</h2>
+        <ul class="user-list">
+        {% for user in latest_user_list %}
+            <li><a href="/instalikeapp/{{ user.id }}/">{{ user.user_name }}</a></li>
+        {% endfor %}
+        </ul>
+
+        <!-- <div class="user-list">
+        {% for user in latest_user_list %}
+        <div class="user">
+            <a href="/instalikeapp/{{ user.id }}/">{{ user.user_name }}</a>
+        </div>
+        {% endfor %}
+        </div> -->
+    
+            
+    {% else %}
+        <p>No polls are available.</p>
+    {% endif %}
+    </div>
+    
+</body>

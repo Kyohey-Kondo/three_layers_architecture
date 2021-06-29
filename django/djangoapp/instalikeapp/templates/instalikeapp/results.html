@@ -1,0 +1,32 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'instalikeapp/style.css' %}">
+
+<div class="results">
+<h2>{{ user.user_name }} さんのいいね数</h2>
+
+<table border="1" style="border-collapse: collapse;">
+    <thead style="display: block;">
+      <tr>
+        <th style="width:300px;">画像</th>
+        <th style="width:300px;">いいね</th>
+      </tr>
+
+      <tbody style="display: block;overflow-y:scroll;">
+            {% for figurepaths in user.figurepaths_set.all %}
+            <tr>
+                <td style="width:300px"><img src="{{ figurepaths.figure_url }}" width="300px" ></td>
+                <td style="width:300px;">{{ figurepaths.like_point }}</td>
+            </tr>
+            {% endfor %}
+      </tbody>
+
+    </thead>
+</table><br>
+
+
+<a href="{% url 'mypage' user.id %}">もう一度 Like ! する?</a><br><br>
+<a href="http://54.150.32.172/instalikeapp/">トップページへ</a><br>
+
+
+<!-- <button type=“button” onclick="location.href=''">ページリンク</button> -->
+</div>

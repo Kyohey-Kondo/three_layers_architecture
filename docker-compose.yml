@@ -1,0 +1,43 @@
+version: '3.7'
+services:
+    nginx:
+        container_name: nginx
+        image: nginx:latest
+        volumes: # add
+            - ./nginx/conf:/etc/nginx/conf.d
+            - ./nginx/uwsgi_params:/etc/nginx/uwsgi_params
+            - ./django/djangoapp/static:/app/static
+        ports:
+            - 80:80
+        depends_on: # add
+            - django
+    
+    django: # add
+        container_name: django
+        build: ./django
+        command: bash -c /startup/startup.sh
+        volumes:
+            - ./django/uwsgi:/wsgi
+            - ./django/djangoapp:/app
+            - ./django/startup:/startup
+        ports:
+            - 8000:8000
+        environment:
+            - USER_ID=1000
+            - GROUP_ID=1000
+            - USER_NAME=ec2-user
+            - GROUP_NAME=ec2-user
+        depends_on: # add
+            - postgresql
+
+    postgresql: # add
+        image: postgres:latest
+        container_name: postgresql
+        environment:
+            - POSTGRES_DB=instalikeapp_db
+            - POSTGRES_USER=user
+            - POSTGRES_PASSWORD=password
+        volumes:
+            - ./pgdata:/var/lib/postgresql/data
+        ports:
+            - 5432:5432
